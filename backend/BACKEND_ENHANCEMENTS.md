@@ -265,3 +265,5 @@ Your SmartStay backend now provides:
 - ✅ **Rich functionality** that complements your beautiful frontend
 
 **Your SmartStay project is now a complete, professional hostel management system!** 🏠✨
+
+

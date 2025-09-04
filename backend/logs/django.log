@@ -5,3 +5,260 @@ WARNING 2025-09-05 02:21:23,013 log 24372 31620 Unauthorized: /api/rooms/
 WARNING 2025-09-05 02:21:23,014 basehttp 24372 31620 "GET /api/rooms/ HTTP/1.1" 401 58
 INFO 2025-09-05 02:21:43,169 autoreload 24372 22656 C:\Users\gaura\OneDrive\Desktop\SmartStay\SmartStay\backend\core\urls.py changed, reloading.
 INFO 2025-09-05 02:21:43,753 autoreload 12956 33552 Watching for file changes with StatReloader
+WARNING 2025-09-05 02:22:20,679 log 12956 7992 Not Found: /
+WARNING 2025-09-05 02:22:20,680 basehttp 12956 7992 "GET / HTTP/1.1" 404 2453
+WARNING 2025-09-05 02:22:20,728 log 12956 7992 Not Found: /favicon.ico
+WARNING 2025-09-05 02:22:20,728 basehttp 12956 7992 "GET /favicon.ico HTTP/1.1" 404 2504
+WARNING 2025-09-05 02:22:28,469 log 12956 7992 Not Found: /
+WARNING 2025-09-05 02:22:28,470 basehttp 12956 7992 "GET / HTTP/1.1" 404 2453
+INFO 2025-09-05 02:36:30,718 autoreload 25140 24200 Watching for file changes with StatReloader
+WARNING 2025-09-05 02:36:52,495 log 25140 27068 Unauthorized: /api/
+WARNING 2025-09-05 02:36:52,495 basehttp 25140 27068 "GET /api/ HTTP/1.1" 401 58
+WARNING 2025-09-05 02:37:29,642 log 25140 27068 Unauthorized: /api/
+WARNING 2025-09-05 02:37:29,642 basehttp 25140 27068 "GET /api/ HTTP/1.1" 401 58
+WARNING 2025-09-05 02:37:58,502 log 25140 27068 Unauthorized: /api/rooms/
+WARNING 2025-09-05 02:37:58,503 basehttp 25140 27068 "GET /api/rooms/ HTTP/1.1" 401 58
+INFO 2025-09-05 02:38:18,076 basehttp 25140 29392 "OPTIONS /api/auth/token/ HTTP/1.1" 200 0
+INFO 2025-09-05 02:38:18,456 basehttp 25140 29392 "POST /api/auth/token/ HTTP/1.1" 200 483
+WARNING 2025-09-05 02:38:18,461 log 25140 29392 Unauthorized: /api/users/me/
+WARNING 2025-09-05 02:38:18,461 basehttp 25140 29392 "GET /api/users/me/ HTTP/1.1" 401 58
+INFO 2025-09-05 02:38:18,462 basehttp 25140 3392 "OPTIONS /api/users/me/ HTTP/1.1" 200 0
+INFO 2025-09-05 02:38:18,479 basehttp 25140 3392 "GET /api/users/me/ HTTP/1.1" 200 526
+INFO 2025-09-05 02:38:18,511 basehttp 25140 3392 "OPTIONS /api/dashboard/stats/ HTTP/1.1" 200 0
+INFO 2025-09-05 02:38:18,512 basehttp 25140 29392 "OPTIONS /api/rooms/stats/ HTTP/1.1" 200 0
+INFO 2025-09-05 02:38:18,515 basehttp 25140 29392 "OPTIONS /api/dashboard/stats/ HTTP/1.1" 200 0
+INFO 2025-09-05 02:38:18,515 basehttp 25140 3392 "OPTIONS /api/payments/stats/ HTTP/1.1" 200 0
+INFO 2025-09-05 02:38:18,516 basehttp 25140 29392 "OPTIONS /api/payments/stats/ HTTP/1.1" 200 0
+INFO 2025-09-05 02:38:18,516 basehttp 25140 3392 "OPTIONS /api/rooms/stats/ HTTP/1.1" 200 0
+INFO 2025-09-05 02:38:18,528 basehttp 25140 3392 "GET /api/rooms/stats/ HTTP/1.1" 200 105
+INFO 2025-09-05 02:38:18,535 basehttp 25140 3392 "GET /api/payments/stats/ HTTP/1.1" 200 128
+INFO 2025-09-05 02:38:18,543 basehttp 25140 3392 "GET /api/rooms/stats/ HTTP/1.1" 200 105
+INFO 2025-09-05 02:38:18,549 basehttp 25140 3392 "GET /api/payments/stats/ HTTP/1.1" 200 128
+ERROR 2025-09-05 02:38:18,730 log 25140 29392 Internal Server Error: /api/dashboard/stats/
+Traceback (most recent call last):
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\fields.py", line 437, in get_attribute
+    return get_attribute(instance, self.source_attrs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\fields.py", line 102, in get_attribute
+    instance = instance[attr]
+               ~~~~~~~~^^^^^^
+KeyError: 'pending_visitors'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\OneDrive\Desktop\SmartStay\SmartStay\backend\core\views.py", line 366, in get
+    return Response(serializer.data)
+                    ^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\serializers.py", line 571, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\serializers.py", line 249, in data
+    self._data = self.to_representation(self.instance)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\serializers.py", line 525, in to_representation
+    attribute = field.get_attribute(instance)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\fields.py", line 470, in get_attribute
+    raise type(exc)(msg)
+KeyError: "Got KeyError when attempting to get a value for field `pending_visitors` on serializer `DashboardStatsSerializer`.\nThe serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.\nOriginal exception text was: 'pending_visitors'."
+ERROR 2025-09-05 02:38:18,733 basehttp 25140 29392 "GET /api/dashboard/stats/ HTTP/1.1" 500 128364
+ERROR 2025-09-05 02:38:18,765 log 25140 3392 Internal Server Error: /api/dashboard/stats/
+Traceback (most recent call last):
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\fields.py", line 437, in get_attribute
+    return get_attribute(instance, self.source_attrs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\fields.py", line 102, in get_attribute
+    instance = instance[attr]
+               ~~~~~~~~^^^^^^
+KeyError: 'pending_visitors'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\OneDrive\Desktop\SmartStay\SmartStay\backend\core\views.py", line 366, in get
+    return Response(serializer.data)
+                    ^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\serializers.py", line 571, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\serializers.py", line 249, in data
+    self._data = self.to_representation(self.instance)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\serializers.py", line 525, in to_representation
+    attribute = field.get_attribute(instance)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\fields.py", line 470, in get_attribute
+    raise type(exc)(msg)
+KeyError: "Got KeyError when attempting to get a value for field `pending_visitors` on serializer `DashboardStatsSerializer`.\nThe serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.\nOriginal exception text was: 'pending_visitors'."
+ERROR 2025-09-05 02:38:18,767 basehttp 25140 3392 "GET /api/dashboard/stats/ HTTP/1.1" 500 128364
+WARNING 2025-09-05 02:38:28,074 log 25140 35056 Not Found: /
+WARNING 2025-09-05 02:38:28,074 basehttp 25140 35056 "GET / HTTP/1.1" 404 2453
+WARNING 2025-09-05 02:38:28,110 log 25140 35056 Not Found: /favicon.ico
+WARNING 2025-09-05 02:38:28,110 basehttp 25140 35056 "GET /favicon.ico HTTP/1.1" 404 2504
+WARNING 2025-09-05 02:38:29,409 log 25140 35056 Not Found: /
+WARNING 2025-09-05 02:38:29,409 basehttp 25140 35056 "GET / HTTP/1.1" 404 2453
+WARNING 2025-09-05 02:39:15,741 log 25140 35056 Not Found: /
+WARNING 2025-09-05 02:39:15,741 basehttp 25140 35056 "GET / HTTP/1.1" 404 2453
+WARNING 2025-09-05 02:40:29,026 log 25140 24308 Unauthorized: /api/rooms/
+WARNING 2025-09-05 02:40:29,026 basehttp 25140 24308 "GET /api/rooms/ HTTP/1.1" 401 58
+INFO 2025-09-05 02:40:54,587 basehttp 25140 3392 "GET /api/users/me/ HTTP/1.1" 200 526
+INFO 2025-09-05 02:40:54,595 basehttp 25140 3392 "GET /api/users/me/ HTTP/1.1" 200 526
+INFO 2025-09-05 02:40:54,602 basehttp 25140 29392 "GET /api/rooms/stats/ HTTP/1.1" 200 105
+INFO 2025-09-05 02:40:54,619 basehttp 25140 29392 "GET /api/payments/stats/ HTTP/1.1" 200 128
+INFO 2025-09-05 02:40:54,623 basehttp 25140 29392 "GET /api/rooms/stats/ HTTP/1.1" 200 105
+ERROR 2025-09-05 02:40:54,637 log 25140 3392 Internal Server Error: /api/dashboard/stats/
+Traceback (most recent call last):
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\fields.py", line 437, in get_attribute
+    return get_attribute(instance, self.source_attrs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\fields.py", line 102, in get_attribute
+    instance = instance[attr]
+               ~~~~~~~~^^^^^^
+KeyError: 'pending_visitors'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\OneDrive\Desktop\SmartStay\SmartStay\backend\core\views.py", line 366, in get
+    return Response(serializer.data)
+                    ^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\serializers.py", line 571, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\serializers.py", line 249, in data
+    self._data = self.to_representation(self.instance)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\serializers.py", line 525, in to_representation
+    attribute = field.get_attribute(instance)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\fields.py", line 470, in get_attribute
+    raise type(exc)(msg)
+KeyError: "Got KeyError when attempting to get a value for field `pending_visitors` on serializer `DashboardStatsSerializer`.\nThe serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.\nOriginal exception text was: 'pending_visitors'."
+ERROR 2025-09-05 02:40:54,648 basehttp 25140 3392 "GET /api/dashboard/stats/ HTTP/1.1" 500 128364
+INFO 2025-09-05 02:40:54,649 basehttp 25140 29392 "GET /api/payments/stats/ HTTP/1.1" 200 128
+ERROR 2025-09-05 02:40:54,679 log 25140 3392 Internal Server Error: /api/dashboard/stats/
+Traceback (most recent call last):
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\fields.py", line 437, in get_attribute
+    return get_attribute(instance, self.source_attrs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\fields.py", line 102, in get_attribute
+    instance = instance[attr]
+               ~~~~~~~~^^^^^^
+KeyError: 'pending_visitors'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\OneDrive\Desktop\SmartStay\SmartStay\backend\core\views.py", line 366, in get
+    return Response(serializer.data)
+                    ^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\serializers.py", line 571, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\serializers.py", line 249, in data
+    self._data = self.to_representation(self.instance)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\serializers.py", line 525, in to_representation
+    attribute = field.get_attribute(instance)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gaura\AppData\Local\Programs\Python\Python311\Lib\site-packages\rest_framework\fields.py", line 470, in get_attribute
+    raise type(exc)(msg)
+KeyError: "Got KeyError when attempting to get a value for field `pending_visitors` on serializer `DashboardStatsSerializer`.\nThe serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.\nOriginal exception text was: 'pending_visitors'."
+ERROR 2025-09-05 02:40:54,681 basehttp 25140 3392 "GET /api/dashboard/stats/ HTTP/1.1" 500 128364
+WARNING 2025-09-05 02:41:00,502 log 25140 35056 Not Found: /
+WARNING 2025-09-05 02:41:00,503 basehttp 25140 35056 "GET / HTTP/1.1" 404 2453
+WARNING 2025-09-05 02:41:01,840 log 25140 35056 Not Found: /
+WARNING 2025-09-05 02:41:01,840 basehttp 25140 35056 "GET / HTTP/1.1" 404 2453
+WARNING 2025-09-05 02:41:04,054 log 25140 35056 Not Found: /
+WARNING 2025-09-05 02:41:04,054 basehttp 25140 35056 "GET / HTTP/1.1" 404 2453
+WARNING 2025-09-05 02:41:04,067 log 25140 35056 Not Found: /favicon.ico
+WARNING 2025-09-05 02:41:04,067 basehttp 25140 35056 "GET /favicon.ico HTTP/1.1" 404 2504
