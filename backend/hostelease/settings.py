@@ -101,6 +101,72 @@ STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+# Email Configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'your-email@gmail.com'  # Replace with your email
+EMAIL_HOST_PASSWORD = 'your-app-password'  # Replace with your app password
+DEFAULT_FROM_EMAIL = 'SmartStay Hostel <your-email@gmail.com>'
+
+# Email settings for development (console backend)
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# File Upload Settings
+FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024  # 10MB
+
+# Security Settings
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
+
+# Logging Configuration
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': str(BASE_DIR / 'logs' / 'django.log'),
+            'formatter': 'verbose',
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+    },
+    'root': {
+        'handlers': ['console', 'file'],
+        'level': 'INFO',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'core': {
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    },
+}
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Auth

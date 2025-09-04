@@ -1,0 +1,7 @@
+INFO 2025-09-05 02:20:36,585 autoreload 24372 22656 Watching for file changes with StatReloader
+WARNING 2025-09-05 02:21:13,375 log 24372 31620 Unauthorized: /api/dashboard/stats/
+WARNING 2025-09-05 02:21:13,375 basehttp 24372 31620 "GET /api/dashboard/stats/ HTTP/1.1" 401 58
+WARNING 2025-09-05 02:21:23,013 log 24372 31620 Unauthorized: /api/rooms/
+WARNING 2025-09-05 02:21:23,014 basehttp 24372 31620 "GET /api/rooms/ HTTP/1.1" 401 58
+INFO 2025-09-05 02:21:43,169 autoreload 24372 22656 C:\Users\gaura\OneDrive\Desktop\SmartStay\SmartStay\backend\core\urls.py changed, reloading.
+INFO 2025-09-05 02:21:43,753 autoreload 12956 33552 Watching for file changes with StatReloader

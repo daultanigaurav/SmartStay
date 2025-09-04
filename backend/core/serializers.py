@@ -3,7 +3,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from .models import (
     Room, Attendance, Complaint, Payment, Feedback, RoomAllocation, 
-    Notice, MaintenanceRequest
+    Notice, MaintenanceRequest, AuditLog, EmailNotification, 
+    Document, Visitor, Event
 )
 
 
@@ -36,6 +37,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     full_name = serializers.SerializerMethodField()
     current_room = serializers.SerializerMethodField()
+    documents_count = serializers.SerializerMethodField()
+    pending_visitors = serializers.SerializerMethodField()
     
     class Meta:
         model = User
@@ -43,12 +46,13 @@ class UserSerializer(serializers.ModelSerializer):
             'id', 'username', 'email', 'first_name', 'last_name', 'full_name',
             'role', 'phone_number', 'date_of_birth', 'address', 
             'emergency_contact', 'profile_picture', 'is_active', 
-            'created_at', 'current_room'
+            'email_verified', 'phone_verified', 'last_login_ip',
+            'created_at', 'current_room', 'documents_count', 'pending_visitors'
         ]
-        read_only_fields = ['id', 'created_at']
+        read_only_fields = ['id', 'created_at', 'last_login_ip']
 
     def get_full_name(self, obj):
-        return f"{obj.first_name} {obj.last_name}".strip()
+        return obj.get_full_name()
 
     def get_current_room(self, obj):
         allocation = obj.allocations.filter(status='active').first()
@@ -59,6 +63,12 @@ class UserSerializer(serializers.ModelSerializer):
                 'start_date': allocation.start_date
             }
         return None
+
+    def get_documents_count(self, obj):
+        return obj.documents.count()
+
+    def get_pending_visitors(self, obj):
+        return obj.visitors.filter(status='pending').count()
 
 
 class RoomSerializer(serializers.ModelSerializer):
@@ -129,7 +139,10 @@ class FeedbackSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Feedback
-        fields = ['id', 'user', 'user_name', 'rating', 'comments', 'created_at']
+        fields = [
+            'id', 'user', 'user_name', 'rating', 'comments', 'category', 
+            'is_anonymous', 'created_at'
+        ]
         read_only_fields = ['user', 'created_at']
 
 
@@ -174,6 +187,76 @@ class MaintenanceRequestSerializer(serializers.ModelSerializer):
         read_only_fields = ['user', 'created_at', 'updated_at']
 
 
+class AuditLogSerializer(serializers.ModelSerializer):
+    user_name = serializers.CharField(source='user.get_full_name', read_only=True)
+    
+    class Meta:
+        model = AuditLog
+        fields = [
+            'id', 'user', 'user_name', 'action', 'model_name', 'object_id',
+            'description', 'ip_address', 'user_agent', 'created_at'
+        ]
+        read_only_fields = ['created_at']
+
+
+class EmailNotificationSerializer(serializers.ModelSerializer):
+    user_name = serializers.CharField(source='user.get_full_name', read_only=True)
+    
+    class Meta:
+        model = EmailNotification
+        fields = [
+            'id', 'user', 'user_name', 'subject', 'message', 'status',
+            'sent_at', 'created_at'
+        ]
+        read_only_fields = ['status', 'sent_at', 'created_at']
+
+
+class DocumentSerializer(serializers.ModelSerializer):
+    user_name = serializers.CharField(source='user.get_full_name', read_only=True)
+    verified_by_name = serializers.CharField(source='verified_by.get_full_name', read_only=True)
+    
+    class Meta:
+        model = Document
+        fields = [
+            'id', 'user', 'user_name', 'document_type', 'title', 'file',
+            'description', 'is_verified', 'verified_by', 'verified_by_name',
+            'verified_at', 'created_at'
+        ]
+        read_only_fields = ['is_verified', 'verified_by', 'verified_at', 'created_at']
+
+
+class VisitorSerializer(serializers.ModelSerializer):
+    student_name = serializers.CharField(source='student.get_full_name', read_only=True)
+    approved_by_name = serializers.CharField(source='approved_by.get_full_name', read_only=True)
+    
+    class Meta:
+        model = Visitor
+        fields = [
+            'id', 'student', 'student_name', 'visitor_name', 'visitor_phone',
+            'visitor_id_proof', 'purpose', 'visit_date', 'visit_time',
+            'expected_duration', 'status', 'approved_by', 'approved_by_name',
+            'approved_at', 'actual_entry_time', 'actual_exit_time', 'created_at'
+        ]
+        read_only_fields = ['approved_by', 'approved_at', 'actual_entry_time', 'actual_exit_time', 'created_at']
+
+
+class EventSerializer(serializers.ModelSerializer):
+    organizer_name = serializers.CharField(source='organizer.get_full_name', read_only=True)
+    attendees_count = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = Event
+        fields = [
+            'id', 'title', 'description', 'event_type', 'start_date', 'end_date',
+            'location', 'organizer', 'organizer_name', 'attendees', 'attendees_count',
+            'is_public', 'created_at', 'updated_at'
+        ]
+        read_only_fields = ['organizer', 'created_at', 'updated_at']
+
+    def get_attendees_count(self, obj):
+        return obj.attendees.count()
+
+
 class DashboardStatsSerializer(serializers.Serializer):
     total_students = serializers.IntegerField()
     total_rooms = serializers.IntegerField()
@@ -182,6 +265,8 @@ class DashboardStatsSerializer(serializers.Serializer):
     pending_payments = serializers.IntegerField()
     pending_complaints = serializers.IntegerField()
     pending_maintenance = serializers.IntegerField()
+    pending_visitors = serializers.IntegerField()
     monthly_revenue = serializers.DecimalField(max_digits=10, decimal_places=2)
+    average_rating = serializers.DecimalField(max_digits=3, decimal_places=2)
 
 
