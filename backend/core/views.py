@@ -4,17 +4,19 @@ from django.db.models import Count, Sum, Q
 from django.utils import timezone
 from rest_framework import viewsets, permissions, status, filters
 from rest_framework.decorators import action
+from rest_framework.parsers import MultiPartParser, FormParser
+from django.contrib.auth.password_validation import validate_password
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import (
-    Room, Attendance, Complaint, Payment, Feedback, RoomAllocation, 
-    Notice, MaintenanceRequest
+    Room, Attendance, Complaint, ComplaintComment, Payment, Feedback, RoomAllocation, 
+    Notice, NoticeRead, MaintenanceRequest
 )
 from .serializers import (
     UserSerializer, UserRegistrationSerializer, RoomSerializer,
-    AttendanceSerializer, ComplaintSerializer, PaymentSerializer,
+    AttendanceSerializer, ComplaintSerializer, ComplaintCommentSerializer, PaymentSerializer,
     FeedbackSerializer, RoomAllocationSerializer, NoticeSerializer,
     MaintenanceRequestSerializer, DashboardStatsSerializer
 )
@@ -34,6 +36,7 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ['role', 'is_active']
     search_fields = ['username', 'first_name', 'last_name', 'email']
@@ -45,10 +48,53 @@ class UserViewSet(viewsets.ModelViewSet):
             return User.objects.filter(id=self.request.user.id)
         return User.objects.all()
 
-    @action(detail=False, methods=["get"], url_path="me")
+    @action(detail=False, methods=["get", "patch"], url_path="me")
     def me(self, request):
+        if request.method.lower() == "patch":
+            serializer = self.get_serializer(request.user, data=request.data, partial=True)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(serializer.data)
         serializer = self.get_serializer(request.user)
         return Response(serializer.data)
+
+    @action(detail=False, methods=["post"], url_path="change-password")
+    def change_password(self, request):
+        current_password = request.data.get("current_password")
+        new_password = request.data.get("new_password")
+        confirm_password = request.data.get("confirm_password")
+
+        if not current_password or not new_password or not confirm_password:
+            return Response({"detail": "All fields are required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        if not request.user.check_password(current_password):
+            return Response({"current_password": ["Current password is incorrect."]}, status=status.HTTP_400_BAD_REQUEST)
+
+        if new_password != confirm_password:
+            return Response({"confirm_password": ["Passwords do not match."]}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Validate new password strength
+        validate_password(new_password, user=request.user)
+
+        request.user.set_password(new_password)
+        request.user.save(update_fields=["password"]) 
+        return Response({"detail": "Password updated successfully."})
+
+    @action(detail=False, methods=["post", "delete"], url_path="me/avatar")
+    def avatar(self, request):
+        if request.method.lower() == "delete":
+            request.user.profile_picture.delete(save=False)
+            request.user.profile_picture = None
+            request.user.save(update_fields=["profile_picture"]) 
+            return Response({"detail": "Profile picture removed."})
+
+        file_obj = request.FILES.get("profile_picture")
+        if not file_obj:
+            return Response({"profile_picture": ["File is required."]}, status=status.HTTP_400_BAD_REQUEST)
+        request.user.profile_picture = file_obj
+        request.user.save(update_fields=["profile_picture"]) 
+        serializer = self.get_serializer(request.user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     @action(detail=False, methods=["get"], url_path="students")
     def students(self, request):
@@ -170,6 +216,14 @@ class ComplaintViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
         return Response({'error': 'Invalid status'}, status=status.HTTP_400_BAD_REQUEST)
 
+    @action(detail=True, methods=["post"], url_path="comments", permission_classes=[permissions.IsAuthenticated])
+    def add_comment(self, request, pk=None):
+        complaint = self.get_object()
+        serializer = ComplaintCommentSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(user=request.user, complaint=complaint)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 class PaymentViewSet(viewsets.ModelViewSet):
     queryset = Payment.objects.all().select_related("user")
@@ -264,11 +318,35 @@ class RoomAllocationViewSet(viewsets.ModelViewSet):
     ordering_fields = ['start_date', 'created_at']
     ordering = ['-created_at']
 
+    def get_queryset(self):
+        if self.request.user.role == "student":
+            return self.queryset.filter(user=self.request.user)
+        return self.queryset
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
     @action(detail=False, methods=["get"], url_path="active")
     def active_allocations(self, request):
         active = self.queryset.filter(status='active')
         serializer = self.get_serializer(active, many=True)
         return Response(serializer.data)
+
+    @action(detail=False, methods=["post"], url_path="transfer", permission_classes=[permissions.IsAuthenticated])
+    def transfer(self, request):
+        from django.utils import timezone
+        new_room_id = request.data.get('room')
+        if not new_room_id:
+            return Response({'room': ['This field is required.']}, status=status.HTTP_400_BAD_REQUEST)
+        current = RoomAllocation.objects.filter(user=request.user, status='active').first()
+        if current:
+            current.status = 'inactive'
+            current.end_date = timezone.now().date()
+            current.save(update_fields=['status', 'end_date'])
+        serializer = self.get_serializer(data={'room': new_room_id, 'start_date': timezone.now().date(), 'status': 'active'})
+        serializer.is_valid(raise_exception=True)
+        serializer.save(user=request.user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class NoticeViewSet(viewsets.ModelViewSet):
@@ -290,6 +368,20 @@ class NoticeViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
+
+    @action(detail=True, methods=["post"], url_path="read")
+    def mark_read(self, request, pk=None):
+        notice = self.get_object()
+        NoticeRead.objects.get_or_create(notice=notice, user=request.user)
+        serializer = self.get_serializer(notice)
+        return Response(serializer.data)
+
+    @action(detail=True, methods=["post"], url_path="unread")
+    def mark_unread(self, request, pk=None):
+        notice = self.get_object()
+        NoticeRead.objects.filter(notice=notice, user=request.user).delete()
+        serializer = self.get_serializer(notice)
+        return Response(serializer.data)
 
 
 class MaintenanceRequestViewSet(viewsets.ModelViewSet):
@@ -326,6 +418,17 @@ class MaintenanceRequestViewSet(viewsets.ModelViewSet):
                 return Response({'error': 'User not found'}, status=status.HTTP_400_BAD_REQUEST)
         return Response({'error': 'assigned_to is required'}, status=status.HTTP_400_BAD_REQUEST)
 
+    @action(detail=True, methods=["patch"], permission_classes=[permissions.IsAuthenticated, IsWarden])
+    def update_status(self, request, pk=None):
+        maintenance = self.get_object()
+        new_status = request.data.get('status')
+        if new_status in ['pending', 'in_progress', 'completed', 'cancelled']:
+            maintenance.status = new_status
+            maintenance.save(update_fields=["status"])
+            serializer = self.get_serializer(maintenance)
+            return Response(serializer.data)
+        return Response({'error': 'Invalid status'}, status=status.HTTP_400_BAD_REQUEST)
+
 
 class DashboardStatsView(APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -350,6 +453,7 @@ class DashboardStatsView(APIView):
         # Complaint and maintenance stats
         pending_complaints = Complaint.objects.filter(status='open').count()
         pending_maintenance = MaintenanceRequest.objects.filter(status='pending').count()
+        pending_visitors = 0
         
         stats = {
             'total_students': total_students,
@@ -359,7 +463,8 @@ class DashboardStatsView(APIView):
             'pending_payments': pending_payments,
             'pending_complaints': pending_complaints,
             'pending_maintenance': pending_maintenance,
-            'monthly_revenue': monthly_revenue
+            'monthly_revenue': monthly_revenue,
+            'pending_visitors': pending_visitors
         }
         
         serializer = DashboardStatsSerializer(stats)

@@ -262,3 +262,352 @@ WARNING 2025-09-05 02:41:04,054 log 25140 35056 Not Found: /
 WARNING 2025-09-05 02:41:04,054 basehttp 25140 35056 "GET / HTTP/1.1" 404 2453
 WARNING 2025-09-05 02:41:04,067 log 25140 35056 Not Found: /favicon.ico
 WARNING 2025-09-05 02:41:04,067 basehttp 25140 35056 "GET /favicon.ico HTTP/1.1" 404 2504
+INFO 2025-09-08 18:07:50,742 autoreload 171093 140545563876992 Watching for file changes with StatReloader
+INFO 2025-09-08 18:08:36,477 basehttp 171093 140545259177664 "OPTIONS /api/auth/token/ HTTP/1.1" 200 0
+WARNING 2025-09-08 18:08:36,801 log 171093 140545259177664 Unauthorized: /api/auth/token/
+WARNING 2025-09-08 18:08:36,802 basehttp 171093 140545259177664 "POST /api/auth/token/ HTTP/1.1" 401 63
+INFO 2025-09-08 18:09:13,643 basehttp 171093 140545259177664 "OPTIONS /api/register/ HTTP/1.1" 200 0
+ERROR 2025-09-08 18:09:13,715 log 171093 140545259177664 Internal Server Error: /api/register/
+Traceback (most recent call last):
+  File "/home/gaurav/.local/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/generics.py", line 194, in post
+    return self.create(request, *args, **kwargs)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/mixins.py", line 18, in create
+    serializer.is_valid(raise_exception=True)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/serializers.py", line 223, in is_valid
+    self._validated_data = self.run_validation(self.initial_data)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/serializers.py", line 442, in run_validation
+    value = self.to_internal_value(data)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/serializers.py", line 499, in to_internal_value
+    validated_value = field.run_validation(primitive_value)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/fields.py", line 757, in run_validation
+    return super().run_validation(data)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/fields.py", line 539, in run_validation
+    self.run_validators(value)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/fields.py", line 553, in run_validators
+    validator(value)
+    ~~~~~~~~~^^^^^^^
+  File "/home/gaurav/.local/lib/python3.13/site-packages/django/core/validators.py", line 361, in __call__
+    if self.compare(cleaned, limit_value):
+       ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gaurav/.local/lib/python3.13/site-packages/django/core/validators.py", line 395, in compare
+    return a < b
+           ^^^^^
+TypeError: '<' not supported between instances of 'str' and 'int'
+ERROR 2025-09-08 18:09:13,722 basehttp 171093 140545259177664 "POST /api/register/ HTTP/1.1" 500 150567
+INFO 2025-09-08 18:10:27,561 autoreload 171093 140545563876992 /home/gaurav/Desktop/SmartStay/backend/core/models.py changed, reloading.
+WARNING 2025-09-08 18:12:20,444 log 173087 139995242407616 Bad Request: /api/register/
+WARNING 2025-09-08 18:12:20,444 basehttp 173087 139995242407616 "POST /api/register/ HTTP/1.1" 400 179
+WARNING 2025-09-08 18:13:00,731 log 173087 139995230865088 Unauthorized: /api/auth/token/
+WARNING 2025-09-08 18:13:00,732 basehttp 173087 139995230865088 "POST /api/auth/token/ HTTP/1.1" 401 63
+WARNING 2025-09-08 18:14:23,493 log 173087 139995230865088 Bad Request: /api/register/
+WARNING 2025-09-08 18:14:23,493 basehttp 173087 139995230865088 "POST /api/register/ HTTP/1.1" 400 236
+WARNING 2025-09-08 18:18:16,269 log 173087 139995222472384 Bad Request: /api/register/
+WARNING 2025-09-08 18:18:16,270 basehttp 173087 139995222472384 "POST /api/register/ HTTP/1.1" 400 179
+WARNING 2025-09-08 18:18:33,965 log 173087 139995222472384 Bad Request: /api/register/
+WARNING 2025-09-08 18:18:33,965 basehttp 173087 139995222472384 "POST /api/register/ HTTP/1.1" 400 66
+INFO 2025-09-08 18:18:46,499 basehttp 173087 139995222472384 "POST /api/register/ HTTP/1.1" 201 207
+INFO 2025-09-08 18:18:50,939 basehttp 173087 139995222472384 "POST /api/auth/token/ HTTP/1.1" 200 486
+WARNING 2025-09-08 18:18:50,943 log 173087 139995222472384 Unauthorized: /api/users/me/
+WARNING 2025-09-08 18:18:50,943 basehttp 173087 139995222472384 "GET /api/users/me/ HTTP/1.1" 401 58
+INFO 2025-09-08 18:18:50,945 basehttp 173087 139995230865088 "OPTIONS /api/users/me/ HTTP/1.1" 200 0
+INFO 2025-09-08 18:18:50,951 basehttp 173087 139995230865088 "GET /api/users/me/ HTTP/1.1" 200 456
+INFO 2025-09-08 18:18:51,040 basehttp 173087 139995230865088 "OPTIONS /api/rooms/stats/ HTTP/1.1" 200 0
+INFO 2025-09-08 18:18:51,040 basehttp 173087 139995222472384 "OPTIONS /api/dashboard/stats/ HTTP/1.1" 200 0
+INFO 2025-09-08 18:18:51,041 basehttp 173087 139995242407616 "OPTIONS /api/payments/stats/ HTTP/1.1" 200 0
+INFO 2025-09-08 18:18:51,045 basehttp 173087 139995209791168 "OPTIONS /api/dashboard/stats/ HTTP/1.1" 200 0
+INFO 2025-09-08 18:18:51,047 basehttp 173087 139994995881664 "OPTIONS /api/rooms/stats/ HTTP/1.1" 200 0
+INFO 2025-09-08 18:18:51,047 basehttp 173087 139994987488960 "OPTIONS /api/payments/stats/ HTTP/1.1" 200 0
+INFO 2025-09-08 18:18:51,059 basehttp 173087 139995230865088 "GET /api/rooms/stats/ HTTP/1.1" 200 105
+INFO 2025-09-08 18:18:51,060 basehttp 173087 139995242407616 "GET /api/payments/stats/ HTTP/1.1" 200 116
+INFO 2025-09-08 18:18:51,063 basehttp 173087 139994995881664 "GET /api/rooms/stats/ HTTP/1.1" 200 105
+INFO 2025-09-08 18:18:51,067 basehttp 173087 139994987488960 "GET /api/payments/stats/ HTTP/1.1" 200 116
+ERROR 2025-09-08 18:18:51,116 log 173087 139995209791168 Internal Server Error: /api/dashboard/stats/
+Traceback (most recent call last):
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/fields.py", line 437, in get_attribute
+    return get_attribute(instance, self.source_attrs)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/fields.py", line 102, in get_attribute
+    instance = instance[attr]
+               ~~~~~~~~^^^^^^
+KeyError: 'pending_visitors'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/gaurav/.local/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/gaurav/Desktop/SmartStay/backend/core/views.py", line 366, in get
+    return Response(serializer.data)
+                    ^^^^^^^^^^^^^^^
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/serializers.py", line 571, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/serializers.py", line 249, in data
+    self._data = self.to_representation(self.instance)
+                 ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/serializers.py", line 525, in to_representation
+    attribute = field.get_attribute(instance)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/fields.py", line 470, in get_attribute
+    raise type(exc)(msg)
+KeyError: "Got KeyError when attempting to get a value for field `pending_visitors` on serializer `DashboardStatsSerializer`.\nThe serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.\nOriginal exception text was: 'pending_visitors'."
+ERROR 2025-09-08 18:18:51,117 log 173087 139995222472384 Internal Server Error: /api/dashboard/stats/
+Traceback (most recent call last):
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/fields.py", line 437, in get_attribute
+    return get_attribute(instance, self.source_attrs)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/fields.py", line 102, in get_attribute
+    instance = instance[attr]
+               ~~~~~~~~^^^^^^
+KeyError: 'pending_visitors'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/gaurav/.local/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/gaurav/Desktop/SmartStay/backend/core/views.py", line 366, in get
+    return Response(serializer.data)
+                    ^^^^^^^^^^^^^^^
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/serializers.py", line 571, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/serializers.py", line 249, in data
+    self._data = self.to_representation(self.instance)
+                 ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/serializers.py", line 525, in to_representation
+    attribute = field.get_attribute(instance)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/fields.py", line 470, in get_attribute
+    raise type(exc)(msg)
+KeyError: "Got KeyError when attempting to get a value for field `pending_visitors` on serializer `DashboardStatsSerializer`.\nThe serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.\nOriginal exception text was: 'pending_visitors'."
+ERROR 2025-09-08 18:18:51,120 basehttp 173087 139995209791168 "GET /api/dashboard/stats/ HTTP/1.1" 500 134913
+ERROR 2025-09-08 18:18:51,121 basehttp 173087 139995222472384 "GET /api/dashboard/stats/ HTTP/1.1" 500 134913
+WARNING 2025-09-08 18:24:21,138 log 173087 139994995881664 Unauthorized: /api/dashboard/stats/
+WARNING 2025-09-08 18:24:21,139 log 173087 139994987488960 Unauthorized: /api/rooms/stats/
+WARNING 2025-09-08 18:24:21,140 log 173087 139995230865088 Unauthorized: /api/payments/stats/
+WARNING 2025-09-08 18:24:21,140 basehttp 173087 139994995881664 "GET /api/dashboard/stats/ HTTP/1.1" 401 183
+WARNING 2025-09-08 18:24:21,141 log 173087 139995242407616 Unauthorized: /api/dashboard/stats/
+WARNING 2025-09-08 18:24:21,142 basehttp 173087 139994987488960 "GET /api/rooms/stats/ HTTP/1.1" 401 183
+WARNING 2025-09-08 18:24:21,143 log 173087 139994979096256 Unauthorized: /api/rooms/stats/
+INFO 2025-09-08 18:24:21,143 basehttp 173087 139994995881664 "OPTIONS /api/complaints/?ordering=-created_at HTTP/1.1" 200 0
+WARNING 2025-09-08 18:24:21,144 log 173087 139994970703552 Unauthorized: /api/payments/stats/
+WARNING 2025-09-08 18:24:21,144 basehttp 173087 139995230865088 "GET /api/payments/stats/ HTTP/1.1" 401 183
+INFO 2025-09-08 18:24:21,145 basehttp 173087 139994987488960 "OPTIONS /api/complaints/?ordering=-created_at HTTP/1.1" 200 0
+WARNING 2025-09-08 18:24:21,146 basehttp 173087 139995242407616 "GET /api/dashboard/stats/ HTTP/1.1" 401 183
+WARNING 2025-09-08 18:24:21,146 basehttp 173087 139994979096256 "GET /api/rooms/stats/ HTTP/1.1" 401 183
+WARNING 2025-09-08 18:24:21,146 basehttp 173087 139994970703552 "GET /api/payments/stats/ HTTP/1.1" 401 183
+WARNING 2025-09-08 18:24:21,186 log 173087 139995230865088 Unauthorized: /api/complaints/
+WARNING 2025-09-08 18:24:21,187 basehttp 173087 139995230865088 "GET /api/complaints/?ordering=-created_at HTTP/1.1" 401 183
+WARNING 2025-09-08 18:24:21,188 log 173087 139995242407616 Unauthorized: /api/complaints/
+WARNING 2025-09-08 18:24:21,188 basehttp 173087 139995242407616 "GET /api/complaints/?ordering=-created_at HTTP/1.1" 401 183
+WARNING 2025-09-08 18:24:34,209 log 173087 139994979096256 Unauthorized: /api/dashboard/stats/
+WARNING 2025-09-08 18:24:34,210 log 173087 139994970703552 Unauthorized: /api/rooms/stats/
+WARNING 2025-09-08 18:24:34,211 log 173087 139994995881664 Unauthorized: /api/payments/stats/
+WARNING 2025-09-08 18:24:34,211 log 173087 139994987488960 Unauthorized: /api/complaints/
+WARNING 2025-09-08 18:24:34,212 basehttp 173087 139994979096256 "GET /api/dashboard/stats/ HTTP/1.1" 401 183
+WARNING 2025-09-08 18:24:34,212 basehttp 173087 139994970703552 "GET /api/rooms/stats/ HTTP/1.1" 401 183
+WARNING 2025-09-08 18:24:34,212 basehttp 173087 139994987488960 "GET /api/complaints/?ordering=-created_at HTTP/1.1" 401 183
+WARNING 2025-09-08 18:24:34,212 basehttp 173087 139994995881664 "GET /api/payments/stats/ HTTP/1.1" 401 183
+INFO 2025-09-08 18:24:52,242 basehttp 173087 139995230865088 "OPTIONS /api/complaints/ HTTP/1.1" 200 0
+WARNING 2025-09-08 18:24:52,244 log 173087 139995242407616 Unauthorized: /api/complaints/
+WARNING 2025-09-08 18:24:52,244 basehttp 173087 139995242407616 "POST /api/complaints/ HTTP/1.1" 401 183
+WARNING 2025-09-08 18:26:43,228 log 173087 139995230865088 Unauthorized: /api/users/me/
+WARNING 2025-09-08 18:26:43,229 log 173087 139995242407616 Unauthorized: /api/users/me/
+WARNING 2025-09-08 18:26:43,229 basehttp 173087 139995230865088 "GET /api/users/me/ HTTP/1.1" 401 183
+WARNING 2025-09-08 18:26:43,229 basehttp 173087 139995242407616 "GET /api/users/me/ HTTP/1.1" 401 183
+WARNING 2025-09-08 18:26:55,500 log 173087 139995230865088 Unauthorized: /api/users/me/
+WARNING 2025-09-08 18:26:55,501 basehttp 173087 139995230865088 "GET /api/users/me/ HTTP/1.1" 401 183
+WARNING 2025-09-08 18:27:40,662 log 173087 139995242407616 Unauthorized: /api/users/me/
+WARNING 2025-09-08 18:27:40,663 basehttp 173087 139995242407616 "PATCH /api/users/me/ HTTP/1.1" 401 183
+WARNING 2025-09-08 18:31:29,880 log 173087 139995242407616 Unauthorized: /api/dashboard/stats/
+WARNING 2025-09-08 18:31:29,881 log 173087 139995230865088 Unauthorized: /api/rooms/stats/
+WARNING 2025-09-08 18:31:29,882 log 173087 139994987488960 Unauthorized: /api/payments/stats/
+WARNING 2025-09-08 18:31:29,883 log 173087 139994979096256 Unauthorized: /api/complaints/
+WARNING 2025-09-08 18:31:29,883 basehttp 173087 139995242407616 "GET /api/dashboard/stats/ HTTP/1.1" 401 183
+WARNING 2025-09-08 18:31:29,884 log 173087 139994995881664 Unauthorized: /api/dashboard/stats/
+WARNING 2025-09-08 18:31:29,884 basehttp 173087 139995230865088 "GET /api/rooms/stats/ HTTP/1.1" 401 183
+WARNING 2025-09-08 18:31:29,885 log 173087 139995242407616 Unauthorized: /api/payments/stats/
+WARNING 2025-09-08 18:31:29,886 basehttp 173087 139994979096256 "GET /api/complaints/?ordering=-created_at HTTP/1.1" 401 183
+WARNING 2025-09-08 18:31:29,886 basehttp 173087 139994987488960 "GET /api/payments/stats/ HTTP/1.1" 401 183
+WARNING 2025-09-08 18:31:29,887 log 173087 139995230865088 Unauthorized: /api/complaints/
+WARNING 2025-09-08 18:31:29,888 log 173087 139994970703552 Unauthorized: /api/rooms/stats/
+WARNING 2025-09-08 18:31:29,888 basehttp 173087 139994995881664 "GET /api/dashboard/stats/ HTTP/1.1" 401 183
+WARNING 2025-09-08 18:31:29,888 basehttp 173087 139995242407616 "GET /api/payments/stats/ HTTP/1.1" 401 183
+WARNING 2025-09-08 18:31:29,889 basehttp 173087 139995230865088 "GET /api/complaints/?ordering=-created_at HTTP/1.1" 401 183
+WARNING 2025-09-08 18:31:29,889 basehttp 173087 139994970703552 "GET /api/rooms/stats/ HTTP/1.1" 401 183
+WARNING 2025-09-08 18:31:32,175 log 173087 139994979096256 Unauthorized: /api/users/me/
+WARNING 2025-09-08 18:31:32,176 log 173087 139994987488960 Unauthorized: /api/users/me/
+WARNING 2025-09-08 18:31:32,176 basehttp 173087 139994979096256 "GET /api/users/me/ HTTP/1.1" 401 183
+WARNING 2025-09-08 18:31:32,176 basehttp 173087 139994987488960 "GET /api/users/me/ HTTP/1.1" 401 183
+WARNING 2025-09-08 18:31:35,383 log 173087 139994995881664 Unauthorized: /api/dashboard/stats/
+WARNING 2025-09-08 18:31:35,383 basehttp 173087 139994995881664 "GET /api/dashboard/stats/ HTTP/1.1" 401 183
+WARNING 2025-09-08 18:31:35,385 log 173087 139994970703552 Unauthorized: /api/rooms/stats/
+WARNING 2025-09-08 18:31:35,386 log 173087 139995230865088 Unauthorized: /api/complaints/
+WARNING 2025-09-08 18:31:35,386 log 173087 139994987488960 Unauthorized: /api/rooms/stats/
+WARNING 2025-09-08 18:31:35,387 log 173087 139995242407616 Unauthorized: /api/payments/stats/
+WARNING 2025-09-08 18:31:35,388 log 173087 139994995881664 Unauthorized: /api/payments/stats/
+WARNING 2025-09-08 18:31:35,389 log 173087 139994979096256 Unauthorized: /api/dashboard/stats/
+WARNING 2025-09-08 18:31:35,389 basehttp 173087 139994970703552 "GET /api/rooms/stats/ HTTP/1.1" 401 183
+WARNING 2025-09-08 18:31:35,390 basehttp 173087 139994987488960 "GET /api/rooms/stats/ HTTP/1.1" 401 183
+WARNING 2025-09-08 18:31:35,390 basehttp 173087 139995230865088 "GET /api/complaints/?ordering=-created_at HTTP/1.1" 401 183
+WARNING 2025-09-08 18:31:35,390 basehttp 173087 139994995881664 "GET /api/payments/stats/ HTTP/1.1" 401 183
+WARNING 2025-09-08 18:31:35,390 basehttp 173087 139995242407616 "GET /api/payments/stats/ HTTP/1.1" 401 183
+WARNING 2025-09-08 18:31:35,391 log 173087 139994970703552 Unauthorized: /api/complaints/
+WARNING 2025-09-08 18:31:35,392 basehttp 173087 139994979096256 "GET /api/dashboard/stats/ HTTP/1.1" 401 183
+WARNING 2025-09-08 18:31:35,392 basehttp 173087 139994970703552 "GET /api/complaints/?ordering=-created_at HTTP/1.1" 401 183
+WARNING 2025-09-08 18:34:52,845 log 173087 139995242407616 Unauthorized: /api/users/me/
+WARNING 2025-09-08 18:34:52,846 log 173087 139995230865088 Unauthorized: /api/users/me/
+WARNING 2025-09-08 18:34:52,846 basehttp 173087 139995242407616 "GET /api/users/me/ HTTP/1.1" 401 183
+WARNING 2025-09-08 18:34:52,846 basehttp 173087 139995230865088 "GET /api/users/me/ HTTP/1.1" 401 183
+WARNING 2025-09-08 18:35:32,242 log 173087 139995242407616 Unauthorized: /api/users/me/
+WARNING 2025-09-08 18:35:32,243 log 173087 139995230865088 Unauthorized: /api/users/me/
+WARNING 2025-09-08 18:35:32,243 basehttp 173087 139995242407616 "GET /api/users/me/ HTTP/1.1" 401 183
+WARNING 2025-09-08 18:35:32,243 basehttp 173087 139995230865088 "GET /api/users/me/ HTTP/1.1" 401 183
+INFO 2025-09-08 18:35:41,648 basehttp 173087 139995242407616 "POST /api/auth/token/ HTTP/1.1" 200 486
+WARNING 2025-09-08 18:35:41,653 log 173087 139995242407616 Unauthorized: /api/users/me/
+WARNING 2025-09-08 18:35:41,653 basehttp 173087 139995242407616 "GET /api/users/me/ HTTP/1.1" 401 58
+INFO 2025-09-08 18:35:41,659 basehttp 173087 139995230865088 "GET /api/users/me/ HTTP/1.1" 200 456
+INFO 2025-09-08 18:35:41,707 basehttp 173087 139994995881664 "GET /api/complaints/?ordering=-created_at HTTP/1.1" 200 2
+INFO 2025-09-08 18:35:41,708 basehttp 173087 139994979096256 "GET /api/rooms/stats/ HTTP/1.1" 200 105
+INFO 2025-09-08 18:35:41,710 basehttp 173087 139994987488960 "GET /api/payments/stats/ HTTP/1.1" 200 116
+INFO 2025-09-08 18:35:41,715 basehttp 173087 139995242407616 "GET /api/rooms/stats/ HTTP/1.1" 200 105
+INFO 2025-09-08 18:35:41,722 basehttp 173087 139994979096256 "GET /api/complaints/?ordering=-created_at HTTP/1.1" 200 2
+INFO 2025-09-08 18:35:41,723 basehttp 173087 139994995881664 "GET /api/payments/stats/ HTTP/1.1" 200 116
+ERROR 2025-09-08 18:35:41,758 log 173087 139995230865088 Internal Server Error: /api/dashboard/stats/
+Traceback (most recent call last):
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/fields.py", line 437, in get_attribute
+    return get_attribute(instance, self.source_attrs)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/fields.py", line 102, in get_attribute
+    instance = instance[attr]
+               ~~~~~~~~^^^^^^
+KeyError: 'pending_visitors'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/gaurav/.local/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/gaurav/Desktop/SmartStay/backend/core/views.py", line 366, in get
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/serializers.py", line 571, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/serializers.py", line 249, in data
+    self._data = self.to_representation(self.instance)
+                 ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/serializers.py", line 525, in to_representation
+    attribute = field.get_attribute(instance)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/fields.py", line 470, in get_attribute
+    raise type(exc)(msg)
+KeyError: "Got KeyError when attempting to get a value for field `pending_visitors` on serializer `DashboardStatsSerializer`.\nThe serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.\nOriginal exception text was: 'pending_visitors'."
+ERROR 2025-09-08 18:35:41,763 log 173087 139994970703552 Internal Server Error: /api/dashboard/stats/
+Traceback (most recent call last):
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/fields.py", line 437, in get_attribute
+    return get_attribute(instance, self.source_attrs)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/fields.py", line 102, in get_attribute
+    instance = instance[attr]
+               ~~~~~~~~^^^^^^
+KeyError: 'pending_visitors'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/gaurav/.local/lib/python3.13/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/django/views/decorators/csrf.py", line 65, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/django/views/generic/base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/gaurav/Desktop/SmartStay/backend/core/views.py", line 366, in get
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/serializers.py", line 571, in data
+    ret = super().data
+          ^^^^^^^^^^^^
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/serializers.py", line 249, in data
+    self._data = self.to_representation(self.instance)
+                 ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/serializers.py", line 525, in to_representation
+    attribute = field.get_attribute(instance)
+  File "/home/gaurav/.local/lib/python3.13/site-packages/rest_framework/fields.py", line 470, in get_attribute
+    raise type(exc)(msg)
+KeyError: "Got KeyError when attempting to get a value for field `pending_visitors` on serializer `DashboardStatsSerializer`.\nThe serializer field might be named incorrectly and not match any attribute or key on the `dict` instance.\nOriginal exception text was: 'pending_visitors'."
+ERROR 2025-09-08 18:35:41,766 basehttp 173087 139995230865088 "GET /api/dashboard/stats/ HTTP/1.1" 500 132800
+ERROR 2025-09-08 18:35:41,767 basehttp 173087 139994970703552 "GET /api/dashboard/stats/ HTTP/1.1" 500 132800

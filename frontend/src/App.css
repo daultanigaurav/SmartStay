@@ -662,6 +662,11 @@ body {
   background: var(--bg-primary);
 }
 
+/* Ensure inputs with left icons keep extra padding so text doesn't overlap icon */
+.input-group input {
+  padding-left: 2.5rem !important;
+}
+
 .form-group input:focus {
   outline: none;
   border-color: var(--primary-color);

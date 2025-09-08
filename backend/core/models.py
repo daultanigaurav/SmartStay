@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator, MinLengthValidator
 import uuid
 
 
@@ -11,7 +11,7 @@ class User(AbstractUser):
         WARDEN = "warden", "Warden"
 
     role = models.CharField(max_length=20, choices=Roles.choices, default=Roles.STUDENT)
-    phone_number = models.CharField(max_length=20, blank=True, validators=[MinValueValidator(10)])
+    phone_number = models.CharField(max_length=20, blank=True, validators=[MinLengthValidator(10)])
     date_of_birth = models.DateField(null=True, blank=True)
     address = models.TextField(blank=True)
     emergency_contact = models.CharField(max_length=20, blank=True)
@@ -90,6 +90,12 @@ class Complaint(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+
+class ComplaintComment(models.Model):
+    complaint = models.ForeignKey(Complaint, on_delete=models.CASCADE, related_name="comments")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="complaint_comments")
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
 class Payment(models.Model):
     class Status(models.TextChoices):
@@ -172,6 +178,15 @@ class Notice(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name="created_notices")
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True, null=True, blank=True)
+
+
+class NoticeRead(models.Model):
+    notice = models.ForeignKey(Notice, on_delete=models.CASCADE, related_name="reads")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="notice_reads")
+    read_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("notice", "user")
 
 
 class MaintenanceRequest(models.Model):

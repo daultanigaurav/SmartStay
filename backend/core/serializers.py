@@ -2,8 +2,8 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from .models import (
-    Room, Attendance, Complaint, Payment, Feedback, RoomAllocation, 
-    Notice, MaintenanceRequest, AuditLog, EmailNotification, 
+    Room, Attendance, Complaint, ComplaintComment, Payment, Feedback, RoomAllocation, 
+    Notice, NoticeRead, MaintenanceRequest, AuditLog, EmailNotification, 
     Document, Visitor, Event
 )
 
@@ -109,14 +109,27 @@ class AttendanceSerializer(serializers.ModelSerializer):
 class ComplaintSerializer(serializers.ModelSerializer):
     user_name = serializers.CharField(source='user.get_full_name', read_only=True)
     room_number = serializers.CharField(source='room.number', read_only=True)
+    comments = serializers.SerializerMethodField()
     
     class Meta:
         model = Complaint
         fields = [
             'id', 'user', 'user_name', 'room', 'room_number', 'title', 
-            'description', 'status', 'created_at', 'updated_at'
+            'description', 'status', 'created_at', 'updated_at', 'comments'
         ]
         read_only_fields = ['user', 'created_at', 'updated_at']
+
+    def get_comments(self, obj):
+        return ComplaintCommentSerializer(obj.comments.all().order_by('-created_at'), many=True).data
+
+
+class ComplaintCommentSerializer(serializers.ModelSerializer):
+    user_name = serializers.CharField(source='user.get_full_name', read_only=True)
+
+    class Meta:
+        model = ComplaintComment
+        fields = ['id', 'user', 'user_name', 'message', 'created_at']
+        read_only_fields = ['user', 'created_at']
 
 
 class PaymentSerializer(serializers.ModelSerializer):
@@ -162,14 +175,21 @@ class RoomAllocationSerializer(serializers.ModelSerializer):
 
 class NoticeSerializer(serializers.ModelSerializer):
     created_by_name = serializers.CharField(source='created_by.get_full_name', read_only=True)
+    is_read = serializers.SerializerMethodField()
     
     class Meta:
         model = Notice
         fields = [
             'id', 'title', 'content', 'priority', 'target_audience',
-            'is_active', 'created_by', 'created_by_name', 'created_at', 'updated_at'
+            'is_active', 'created_by', 'created_by_name', 'created_at', 'updated_at', 'is_read'
         ]
         read_only_fields = ['created_by', 'created_at', 'updated_at']
+
+    def get_is_read(self, obj):
+        request = self.context.get('request')
+        if not request or not request.user.is_authenticated:
+            return False
+        return NoticeRead.objects.filter(notice=obj, user=request.user).exists()
 
 
 class MaintenanceRequestSerializer(serializers.ModelSerializer):

@@ -8,9 +8,15 @@ const Dashboard = () => {
   const [stats, setStats] = useState(null)
   const [loading, setLoading] = useState(true)
   const [recentActivities, setRecentActivities] = useState([])
+  const [complaints, setComplaints] = useState([])
+  const [newComplaint, setNewComplaint] = useState({ title: '', description: '' })
+  const [submitting, setSubmitting] = useState(false)
+  const [formError, setFormError] = useState('')
+  const [formSuccess, setFormSuccess] = useState('')
 
   useEffect(() => {
     fetchDashboardData()
+    fetchMyComplaints()
   }, [])
 
   const fetchDashboardData = async () => {
@@ -26,6 +32,49 @@ const Dashboard = () => {
     } catch (error) {
       console.error('Error fetching dashboard data:', error)
       setLoading(false)
+    }
+  }
+
+  const fetchMyComplaints = async () => {
+    try {
+      const res = await axios.get('http://localhost:8000/api/complaints/?ordering=-created_at')
+      // Backend returns all complaints for admins; students only theirs. That's fine for demo.
+      setComplaints(res.data)
+    } catch (e) {
+      console.error('Failed to fetch complaints', e)
+    }
+  }
+
+  const submitComplaint = async (e) => {
+    e.preventDefault()
+    setSubmitting(true)
+    setFormError('')
+    setFormSuccess('')
+    try {
+      await axios.post('http://localhost:8000/api/complaints/', {
+        title: newComplaint.title,
+        description: newComplaint.description
+      })
+      setFormSuccess('Complaint submitted')
+      setNewComplaint({ title: '', description: '' })
+      fetchMyComplaints()
+      fetchDashboardData()
+    } catch (error) {
+      const data = error.response?.data
+      let message = 'Failed to submit complaint'
+      if (data) {
+        if (typeof data === 'string') message = data
+        else if (typeof data === 'object') {
+          const parts = []
+          for (const [k, v] of Object.entries(data)) {
+            parts.push(Array.isArray(v) ? `${k}: ${v.join(', ')}` : `${k}: ${String(v)}`)
+          }
+          message = parts.join('\n') || message
+        }
+      }
+      setFormError(message)
+    } finally {
+      setSubmitting(false)
     }
   }
 
@@ -128,6 +177,74 @@ const Dashboard = () => {
         </div>
       </div>
 
+      {/* Quick Actions - Submit Complaint */}
+      <div className="quick-actions">
+        <h3>Quick Actions</h3>
+        <div className="actions-grid">
+          <div className="action-btn" style={{ cursor: 'default' }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+              <polyline points="14,2 14,8 20,8"></polyline>
+            </svg>
+            Submit Complaint
+          </div>
+        </div>
+        <form onSubmit={submitComplaint} style={{ marginTop: '1rem' }}>
+          {formError && <div className="error-message" style={{ whiteSpace: 'pre-wrap' }}>{formError}</div>}
+          {formSuccess && <div className="error-message" style={{ color: '#065f46', background: '#ecfdf5', borderColor: '#a7f3d0' }}>{formSuccess}</div>}
+          <div className="form-group">
+            <label htmlFor="complaint_title">Title</label>
+            <input
+              id="complaint_title"
+              type="text"
+              value={newComplaint.title}
+              onChange={(e) => setNewComplaint({ ...newComplaint, title: e.target.value })}
+              placeholder="Complaint title"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="complaint_description">Description</label>
+            <input
+              id="complaint_description"
+              type="text"
+              value={newComplaint.description}
+              onChange={(e) => setNewComplaint({ ...newComplaint, description: e.target.value })}
+              placeholder="Describe the issue"
+              required
+            />
+          </div>
+          <button type="submit" className="register-btn" disabled={submitting}>
+            {submitting ? 'Submitting...' : 'Submit'}
+          </button>
+        </form>
+      </div>
+
+      {/* My Complaints */}
+      <div className="recent-activities" style={{ marginTop: '1.5rem' }}>
+        <h3>My Complaints</h3>
+        {complaints.length === 0 ? (
+          <p style={{ color: 'var(--text-secondary)' }}>No complaints yet.</p>
+        ) : (
+          <div className="activity-list">
+            {complaints.map((c) => (
+              <div key={c.id} className="activity-item">
+                <div className="activity-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                    <polyline points="14,2 14,8 20,8"></polyline>
+                  </svg>
+                </div>
+                <div className="activity-content">
+                  <p style={{ margin: 0 }}>{c.title}</p>
+                  <span>Status: {c.status}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
       {/* Charts Section */}
       <div className="charts-grid">
         <div className="chart-card">
@@ -187,44 +304,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Quick Actions */}
-      <div className="quick-actions">
-        <h3>Quick Actions</h3>
-        <div className="actions-grid">
-          <button className="action-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-              <circle cx="8.5" cy="7" r="4"></circle>
-              <line x1="20" y1="8" x2="20" y2="14"></line>
-              <line x1="23" y1="11" x2="17" y2="11"></line>
-            </svg>
-            Add Student
-          </button>
-          <button className="action-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-              <polyline points="9,22 9,12 15,12 15,22"></polyline>
-            </svg>
-            Add Room
-          </button>
-          <button className="action-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="12" y1="1" x2="12" y2="23"></line>
-              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-            </svg>
-            Process Payment
-          </button>
-          <button className="action-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
-              <polyline points="14,2 14,8 20,8"></polyline>
-            </svg>
-            Generate Report
-          </button>
-        </div>
-      </div>
-
-      {/* Recent Activities */}
+      {/* Recent Activities (static examples kept) */}
       <div className="recent-activities">
         <h3>Recent Activities</h3>
         <div className="activity-list">
